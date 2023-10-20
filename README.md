@@ -85,6 +85,7 @@ LEFT JOIN t_user u ON o.user_id = u.id;
 上述脚本中的`${dbserver1}`和`${dbserver2}`占位符表示连接器动态配置选项，例如数据库连接配置。
 
 2. 添加连接器配置
+
 在配置文件`application.properties`中添加连接器配置。
 
 * Source Connector配置
@@ -119,7 +120,7 @@ flink.sink.connector.options.dbserver2.password=password
 
 请按需引入数据库驱动依赖及连接器依赖，依赖版本可按照实际环境调整。
 
-项目中默认引入数据库依赖：
+项目中默认引入数据库驱动：
 
 ```xml
 <dependency>
