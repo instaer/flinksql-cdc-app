@@ -43,8 +43,8 @@ public class ReadFlinkSQLService implements ApplicationRunner {
     @Autowired
     private ThreadPoolTaskExecutor jobExecutor;
 
-    @Value("${connector.options.password.hide:true}")
-    private boolean hideConnectorOptionsPassword;
+    @Value("${log.connector.options.password.hide:true}")
+    private boolean hidePasswordOptions;
 
     private static File[] files = null;
     private static final String VARIABLES_PREFIX = "${";
@@ -163,7 +163,7 @@ public class ReadFlinkSQLService implements ApplicationRunner {
                 String segmentSQL = lineJoiner.toString();
                 segmentSQLs.add(segmentSQL);
 
-                if (hideConnectorOptionsPassword) {
+                if (hidePasswordOptions) {
                     Matcher passwordMatcher = passwordPattern.matcher(segmentSQL);
                     if (passwordMatcher.find()) {
                         segmentSQL = segmentSQL.replace("'" + passwordMatcher.group(1) + "'", "******");

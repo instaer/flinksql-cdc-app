@@ -111,10 +111,10 @@ flink.sink.connector.options.dbserver2.password=password
 
 应用启动后，将自动解析和执行`sql`目录下的脚本文件，并以脚本名称作为任务名，以脚本为单位提交任务到local模式启动的Flink集群。
 
-任务可以通过Flink Web Dashboard查看，默认访问地址为：`<PROTOCOL>://<IP>:18081`。
+任务可以通过Flink Web Dashboard查看，默认访问地址为：`<PROTOCOL>://<IP>:18081`。可通过配置属性`flink.configuration.rest-port`自定义Web UI端口。
 
 任务截图：
-![\[demo\]merge_\[t_user_order\]任务截图](https://github.com/instaer/staticfile/blob/master/images/%5Bdemo%5Dmerge_%5Bt_user_order%5D%E4%BB%BB%E5%8A%A1%E6%88%AA%E5%9B%BE.PNG?raw=true)
+![\[demo\]merge_\[t_user_order\]任务截图](https://raw.githubusercontent.com/instaer/static/file/images/%5Bdemo%5Dmerge_%5Bt_user_order%5D%E4%BB%BB%E5%8A%A1%E6%88%AA%E5%9B%BE.PNG)
 
 ## Add Dependency
 
@@ -147,3 +147,9 @@ flink.sink.connector.options.dbserver2.password=password
 ```
 
 如果需要使用其它类型数据库和连接器，请自行添加。
+
+## Actuator Endpoints Provided
+
+通过`Spring Boot Actuator`模块创建自定义Endpoint，用于实时查看运行Job的线程池状态以及各连接器配置选项，也可以接入服务监控系统（如Prometheus）。
+
+默认以Web方式暴露Endpoint为：`connectorOptions`、`jobExecutor`。

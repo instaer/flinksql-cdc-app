@@ -1,23 +1,21 @@
-package com.github.instaer.cdc.flinksql.controller;
+package com.github.instaer.cdc.flinksql.endpoint;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.instaer.cdc.flinksql.property.FlinkSinkConnectorOptions;
 import com.github.instaer.cdc.flinksql.property.FlinkSourceConnectorOptions;
 import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.boot.actuate.endpoint.annotation.Endpoint;
+import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
-@Slf4j
-@RestController
-public class MainController {
+@Endpoint(id = "connectorOptions")
+@Component
+public class ConnectorOptionsEndPoint {
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -28,12 +26,9 @@ public class MainController {
     @Autowired
     private FlinkSinkConnectorOptions flinkSinkConnectorOptions;
 
-    @Autowired
-    private ThreadPoolTaskExecutor jobExecutor;
-
+    @ReadOperation
     @SneakyThrows
-    @GetMapping("/connectorOptions")
-    public String connectorOptions() {
+    public String getConnectorOptions() {
         Map<String, Map<String, String>> sourceConnectorOptions = new HashMap<>(flinkSourceConnectorOptions.getOptions());
         Map<String, Map<String, String>> sinkConnectorOptions = new HashMap<>(flinkSinkConnectorOptions.getOptions());
         Arrays.asList(sourceConnectorOptions, sinkConnectorOptions).forEach(m ->
@@ -55,19 +50,6 @@ public class MainController {
         Map<String, Object> map = new HashMap<>(2);
         map.put("flinkSourceConnectorOptions", printFlinkSourceConnectorOptions);
         map.put("flinkSinkConnectorOptions", printFlinkSinkConnectorOptions);
-        return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(map);
-    }
-
-    @SneakyThrows
-    @GetMapping("/jobExecutor")
-    public String jobExecutor() {
-        Map<String, Object> map = new LinkedHashMap<>(6);
-        map.put("CorePoolSize", jobExecutor.getCorePoolSize());
-        map.put("MaxPoolSize", jobExecutor.getMaxPoolSize());
-        map.put("CurrentPoolSize", jobExecutor.getPoolSize());
-        map.put("ActiveThreadsCount", jobExecutor.getActiveCount());
-        map.put("KeepAliveSeconds", jobExecutor.getKeepAliveSeconds());
-        map.put("TaskQueueSize", jobExecutor.getThreadPoolExecutor().getQueue().size());
         return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(map);
     }
 }
