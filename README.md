@@ -152,4 +152,6 @@ flink.sink.connector.options.dbserver2.password=password
 
 通过`Spring Boot Actuator`模块创建自定义Endpoint，用于实时查看运行Job的线程池状态以及各连接器配置选项，也可以接入服务监控系统（如Prometheus）。
 
-默认以Web方式暴露Endpoint为：`connectorOptions`、`jobExecutor`。
+默认以Web方式暴露Endpoint地址为：
+* `/actuator/connectorOptions`
+* `/actuator/jobExecutor`
