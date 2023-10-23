@@ -10,10 +10,10 @@ public class FlinkJobExecutorConfig {
     @Bean
     public ThreadPoolTaskExecutor jobExecutor() {
         ThreadPoolTaskExecutor jobExecutor = new ThreadPoolTaskExecutor();
-        jobExecutor.setCorePoolSize(8);
-        jobExecutor.setMaxPoolSize(16);
+        jobExecutor.setCorePoolSize(0);
+        jobExecutor.setMaxPoolSize(Integer.MAX_VALUE);
         jobExecutor.setKeepAliveSeconds(60);
-        jobExecutor.setQueueCapacity(100);
+        jobExecutor.setQueueCapacity(0);
         jobExecutor.setThreadNamePrefix("flink-job-executor-");
         jobExecutor.initialize();
         return jobExecutor;
