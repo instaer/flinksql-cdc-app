@@ -58,7 +58,7 @@ public class ReadFlinkSQLService implements ApplicationRunner {
     @SneakyThrows
     @PostConstruct
     private void init() {
-        Resource[] resources = resourcePatternResolver.getResources("classpath:sql/*.sql");
+        Resource[] resources = resourcePatternResolver.getResources("classpath:sql/*.{[sS][qQ][lL]}");
         int sqlSum = resources.length;
         if (sqlSum > 0) {
             files = new File[sqlSum];
