@@ -118,9 +118,19 @@ flink.sink.connector.options.dbserver2.password=password
 
 ## Add Dependency
 
-请按需引入数据库驱动依赖及连接器依赖，依赖版本可按照实际环境调整。
+请按需引入CDC connector、数据库驱动和Flink连接器依赖，依赖版本可按照实际环境调整。
 
-项目中默认引入数据库驱动：
+* 默认引入MySQL CDC连接器
+
+```xml
+<dependency>
+    <groupId>com.ververica</groupId>
+    <artifactId>flink-connector-mysql-cdc</artifactId>
+    <version>${flink.cdc.connectors.version}</version>
+</dependency>
+```
+
+* 默认引入数据库驱动
 
 ```xml
 <dependency>
@@ -136,7 +146,7 @@ flink.sink.connector.options.dbserver2.password=password
 </dependency>
 ```
 
-默认引入JDBC SQL连接器：
+* 默认引入JDBC SQL连接器
 
 ```xml
 <dependency>
